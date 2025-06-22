@@ -12,23 +12,20 @@ const useFetchData = <T, R extends { prompt: string }>() => {
     setError(null);
     try {
       const resp = await fetch(endpoint, {
-        method: 'POST',
+        method: "POST",
         body: JSON.stringify(body),
         headers: {
-          'Content-Type': 'application/json',
-        },
+          "Content-Type": "application/json"
+        }
       });
 
       if (!resp.ok) {
-        throw new Error('Failed to fetch data');
+        throw new Error("Failed to fetch data");
       }
 
       const result = await resp.json();
       setResponseData(result);
-      setGeneratedImages((prev) => [
-        ...prev,
-        { imageUrl: result?.message, prompt: body.prompt },
-      ]);
+      setGeneratedImages(prev => [...prev, { imageUrl: result?.message, prompt: body.prompt }]);
     } catch (err) {
       setError((err as Error).message);
     } finally {
